@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+{% block title %} Orders {% endblock title %}
+{% block body %}
+
+<div style="margin: 1%;">
+  <h1>Your Orders</h1>
+
+  <ul>
+    {% for x in orders %}
+    <li>{{ x.label }} {{ x.name }} {{ x.address }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock body %}
