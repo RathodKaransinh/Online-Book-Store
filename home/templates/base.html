@@ -15,7 +15,7 @@
     <div class="navbar navbar-expand-sm bg-dark navbar-dark">
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Books</a>
+              <a class="navbar-brand" href="#">Book Store</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -31,13 +31,21 @@
                     <a class="nav-link" href="/orders">Your Orders</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/logout" style="color: red;">Logout</a>
+                    <a class="nav-link" aria-current="page" href="/logout" onmouseover="handleLogoutover(this)" onmouseout="handleLogoutout(this)">Logout</a>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
     </div>
+    <script>
+      function handleLogoutover(elem){
+        elem.style.color = 'red';
+      }
+      function handleLogoutout(elem){
+        elem.style.color = '#FFFFFF8C';
+      }
+    </script>
 
     {% block body %}{% endblock body %}
 
