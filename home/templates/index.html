@@ -31,89 +31,28 @@
   <div class="container my-3">
     <h1 class="my-4 text-center">Book Catalogue</h1>
           <div class="row">
+            {%for product in products%}
+
             <div class="col-md-4">
               <div class="card mb-4 shadow-sm">
-            <img src="https://source.unsplash.com/1200x900/?book, gita" class="d-block w-100" alt="...">
+            <img src={{product.image}} class="d-block w-100" alt="...">
                 
                 <div class="card-body">
-                  <p class="card-text">Book 1</p>
+                  <p class="card-text"><b>{{product.name}}</b></p>
+                  <p class="card-text">{{product.desc}}</p>
+                  <p class="card-text">Price: {{product.price}}</p>
+                  <p class="card-text">Selled by: {{product.uname}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleFavorites(this, 'Book1')">Favorite</button>
-                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/order/{{'Book1'}}">Place Order</a>
+                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/order/{{product.name}}">Place Order</a>
                     </div>
-                    <small class="text-muted">9 mins</small>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img src="https://source.unsplash.com/1200x900/?book, ramayan" class="d-block w-100" alt="...">
-                <div class="card-body">
-                  <p class="card-text">Book 2</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleFavorites(this, 'Book2')">Favorite</button>
-                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/order/{{'Book2'}}">Place Order</a>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-                <img src="https://source.unsplash.com/1200x900/?book, story" class="d-block w-100" alt="...">
-                <div class="card-body">
-                  <p class="card-text">Book 3</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleFavorites(this, 'Book3')">Favorite</button>
-                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/order/{{'Book3'}}">Place Order</a>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <div class="col-md-4">
-              <div class="card mb-4 shadow-sm">
-               <img src="https://source.unsplash.com/1200x900/?book,unfictional" class="d-block w-100" alt="...">
-                <div class="card-body">
-                  <p class="card-text">Book 4</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="handleFavorites(this, 'Book4')">Favorite</button>
-                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/order/{{'Book4'}}">Place Order</a>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
+
+            {%endfor%}
           </div>
-        </div>
-
-        <script>
-          const favorites = new Map([
-            ['Book1', false],
-            ['Book2', false],
-            ['Book3', false],
-            ['Book4', false],
-          ]);
-
-          function handleFavorites(elem, key){
-            if (favorites.get('Book1') == false) {
-              elem.style.color = 'red';
-              favorites.set('Book1', true)
-            } else {
-              elem.style.color = 'grey';
-              favorites.set('Book1', false)
-            }
-          }
-        </script>
+  </div>
 {% endblock body %}
 

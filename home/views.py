@@ -1,15 +1,19 @@
 import datetime
 from django.shortcuts import redirect, render
-from home.models import Order
+from home.models import Order, Product
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 
 # Create your views here.
 
 def index(request):
+    products = Product.objects.values().all()
+    context = {
+        'products' : products
+    }
     if request.user.is_anonymous:
         return redirect("/login")
-    return render(request, 'index.html')
+    return render(request, 'index.html', context)
 
 def about(request):
     return render(request, 'about.html')
@@ -74,3 +78,15 @@ def registerUser(request):
             pass
         
     return render(request, "register.html")
+
+def addProduct(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        desc = request.POST.get('desc')
+        price = request.POST.get('price')
+        image = request.POST.get('image')
+        product = Product(name=name, uname=request.user.username, desc=desc, price=price, image=image)
+        product.save()
+        return redirect('/')
+    
+    return render(request, 'addProduct.html')

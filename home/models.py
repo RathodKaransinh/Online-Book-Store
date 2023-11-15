@@ -6,7 +6,17 @@ class Order(models.Model):
   name = models.CharField(max_length=100)
   address = models.CharField(max_length=255)
   uname = models.CharField(max_length=100)
-  date = models.DateField
+  date = models.DateField(auto_now=True)
   
+  def __str__(self):
+    return self.name
+  
+class Product(models.Model):
+  name = models.CharField(max_length=100)
+  uname = models.CharField(max_length=100)
+  desc = models.TextField(max_length=400)
+  price = models.IntegerField(blank=True)
+  image = models.CharField(max_length=255) 
+    
   def __str__(self):
     return self.name
