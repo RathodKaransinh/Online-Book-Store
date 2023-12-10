@@ -83,23 +83,47 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin" method="post" action="/add">
+    <div class="card shadow-rm mx-auto">
+    <form class="form-signin" method="post" action="/add" enctype="multipart/form-data">
         {% csrf_token %}
         <h1 class="h3 mb-3 font-weight-normal">Add Product</h1>
+        {%if product == None%}
+        <input type="hidden" id="id" name="id" value="0">
+        {%else%}
+        <input type="hidden" id="id" name="id" value="{{product.id}}">
+        {%endif%}
         <label for="name" class="sr-only">Name</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="Name" required
-            autofocus>
+        <input type="text" id="name" name="name" value="{{product.name}}" class="form-control" placeholder="Name" required
+        autofocus>
+        <label for="cat" class="sr-only">Category</label>
         <label for="desc" class="sr-only">Description</label>
-        <input type="text" id="desc" name="desc" class="form-control" placeholder="Description" required
-            autofocus>
+        <input type="text" id="desc" name="desc" value="{{product.desc}}" class="form-control" placeholder="Description" required
+        autofocus>
         <label for="price" class="sr-only">Price</label>
-        <input type="number" id="price" name="price" class="form-control" placeholder="Price" required
+        <input type="number" id="price" name="price" value="{{product.price}}" class="form-control" placeholder="Price" required
             autofocus>
-        <label for="image" class="sr-only">Image</label>
-        <input type="text" id="image" name="image" class="form-control" placeholder="Image" required
+        <label for="stock" class="sr-only">Stock Available</label>
+        <input type="number" id="stock" name="stock" value="{{product.stock}}" class="form-control" placeholder="Stock" required
+            autofocus>
+            <label for="image" class="sr-only">Image</label>
+            <input type="file" id="image" name="image" class="form-control" placeholder="Image"
             autofocus> 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+            <b>Category: </b>&nbsp<select name="cat" id="cat" class="cat mb-3">
+                {% for category in categories %}
+                {%if product.category.id == category.id%}
+                <option value={{category.id}} selected>{{category.name}}</option>
+                {%elif product.category.id != category.id%}
+                <option value={{category.id}}>{{category.name}}</option>
+                {%endif%}
+                {% endfor %}
+            </select>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                {%if product != None%}Update
+                {%elif product == None%}Add
+                {%endif%}
+            </button>
     </form>
+</div>
 </body>
 
 </html>

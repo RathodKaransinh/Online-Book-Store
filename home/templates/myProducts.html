@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} My Products
+{% endblock title %}
+
+{% block body %}
+<h2 class="mb-3 mt-3" style="text-align: center;">My Products</h2>
+<table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Image</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Category</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><img style="height: 60px; width: 60px;" class="rounded-circle" src="{{product.image.url}}" alt=""></td>
+        <td>{{product.name}}</td>
+        <td>{{product.desc}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.stock}}</td>
+        <td>{{product.category}}</td>
+        <td>
+        <a type="button" class="mb-2" style="background-color: red; color: black;" href="/myproducts/?action=0&id={{product.id}}">Delete</a>
+        <br>
+        <a type="button" style="background-color: yellow; color:black;" href="/myproducts/?action=1&id={{product.id}}">Update</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="/add" style="text-align: center; display: block; color: green;"><h5>Add Product</h5></a>
+
+{% endblock %}
