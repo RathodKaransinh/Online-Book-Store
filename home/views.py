@@ -70,12 +70,6 @@ def index(request):
 
 
 
-def about(request):
-    return render(request, 'about.html')
-
-
-
-
 
 def orders(request):
     orders = Order.objects.filter(customer=request.user)
