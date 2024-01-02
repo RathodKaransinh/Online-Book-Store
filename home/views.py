@@ -3,7 +3,6 @@ from home.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-from django.contrib.sessions.models import Session
 
 # Create your views here.
 
