@@ -1,15 +1,14 @@
+from math import prod
 from django.shortcuts import redirect, render
 from home.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+@login_required(login_url='login')
 def index(request):
-    if request.user.is_anonymous:
-        return redirect("/login")
-    
     products = None
     categories = Category.get_all_categories()
     categoryID = request.GET.get('category')
@@ -30,10 +29,11 @@ def index(request):
         
         
     
-    if request.method == "POST":
-        product = request.POST.get('product')
+    # if request.method == "POST":
+    product = request.GET.get('prodID')
+    if product:
         prod = Product.objects.get(id=product)
-        remove = request.POST.get('remove')
+        remove = request.GET.get('remove')
         cart = request.session.get('cart')
         if cart:
             quantity = cart.get(product)
@@ -47,30 +47,29 @@ def index(request):
                     if prod.stock > quantity:
                         cart[product]  = quantity+1
                     else:
-                        messages.error(request, 'Product out of Stock!')
-
+                        messages.error(request, 'Requested no. of products not in Stock!')
             else:
+                if remove==None:
+                    if prod.stock >= 1:
+                        cart[product] = 1
+                    else:
+                        messages.error(request, 'Requested no. of products not in Stock!')
+                
+        else:
+            if remove == None:
+                cart = {}
                 if prod.stock >= 1:
                     cart[product] = 1
                 else:
-                    messages.error(request, 'Product out of Stock!')
-        else:
-            cart = {}
-            if prod.stock >= 1:
-                cart[product] = 1
-            else:
-                messages.error(request, 'Product out of Stock!')
-
+                    messages.error(request, 'Requested no. of products not in Stock!')
         request.session['cart'] = cart
-        print('cart' , request.session['cart'])
-        return redirect('/')
     
     return render(request, 'index.html', context)
 
 
 
 
-
+@login_required(login_url='login')
 def orders(request):
     orders = Order.objects.filter(customer=request.user)
     context = {
@@ -82,7 +81,7 @@ def orders(request):
 
 
 
-
+@login_required(login_url='login')
 def order(request):
     if request.method == "POST":
         address = request.POST.get('address')
@@ -131,7 +130,7 @@ def loginUser(request):
 
 
 
-
+@login_required(login_url='login')
 def logoutUser(request):
     logout(request)
     return redirect("/login")
@@ -162,7 +161,7 @@ def registerUser(request):
 
 
 
-
+@login_required(login_url='login')
 def addProduct(request):
     product = None
     if request.GET.get('id'):
@@ -199,7 +198,7 @@ def addProduct(request):
 
 
 
-
+@login_required(login_url='login')
 def myproducts(request):
     context = {
         'products': Product.get_all_products_by_userid(request.user)
@@ -222,7 +221,7 @@ def myproducts(request):
     
     
     
-    
+@login_required(login_url='login')
 def cart(request):
     ids = list(request.session.get('cart').keys())
     products = Product.get_product_by_ids(ids)

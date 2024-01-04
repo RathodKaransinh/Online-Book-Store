@@ -69,27 +69,30 @@
                 <div class="card-footer p-0 no-gutters">
 
                   {% if product|is_in_cart:request.session.cart %}
-                  <div class="row no-gutters">
-                    <form action="/#{{product.id}}" class="col-2 " method="post">
+                  <div style="display: flex; flex-direction: row;">
+                    <!-- <form action="/#decBtn" class="col-2 " method="post">
                       {% csrf_token %}
                       <input hidden type="text" name='product' value='{{product.id}}'>
-                      <input hidden type="text" name='remove' value='True'>
-                      <input type="submit" value=" - " class="btn btn-block btn-success border-right">
-                    </form>
+                      <input hidden type="text" name='remove' value='True'> -->
+                      <!-- <input type="submit" value=" - " class="btn btn-success border-right"> -->
+                    <button id="dec" value="{{product.id}}" onclick="handleDec(this, {{product.id}})" style="margin-right: 3px;" class="btn btn-success"> - </button>
+
+                    <!-- </form> -->
                     <div class="text-center col btn btn-success">{{product|cart_quantity:request.session.cart}} in Cart</div>
-                    <form action="/#{{product.id}}" class="col-2 " method="post">
+                    <!-- <form action="/" class="col-2 " method="post">
                       {% csrf_token %}
-                      <input hidden type="text" name='product' value='{{product.id}}'>
-                      <input type="submit" value=" + " class="btn btn-block btn-success border-left">
-                    </form>
+                      <input hidden type="text" name='product' value='{{product.id}}'> -->
+                      <!-- <input type="submit" value=" + " class="btn btn-success border-left"> -->
+                    <button id="add" value="{{product.id}}" onclick="handleAdd(this, {{product.id}})" style="margin-left: 3px;" class="btn btn-success"> + </button>
+
+                    <!-- </form> -->
                   </div>
                   {% else %}
-                  <form action="/#{{product.id}}" method="POST" class="btn-block">
+                  <!-- <form action="/" method="POST" class="btn-block">
                     {% csrf_token %}
-                    <input hidden type="text" name='product' value='{{product.id}}'>
-                    <input type="submit" class="float-right btn btn-success form-control"
-                      value="Add To Cart">
-                  </form>
+                    <input hidden type="text" name='product' value='{{product.id}}'> -->
+                    <a type="'button" id="add" value="{{product.id}}" style="display: block;" onclick="handleAdd(this, {{product.id}})" class="btn btn-success">Add To Cart</a>
+                  <!-- </form> -->
                   {% endif %}
       
                 </div>
@@ -99,5 +102,24 @@
             {%endfor%}
           </div>
   </div>
+
+<script>
+
+function handleAdd(e, value) {
+
+  $.get("/?prodID="+value, function(data, status){
+        location.reload();
+      });
+}
+
+function handleDec(e, value) {
+
+  $.get("/?prodID="+value+"&remove=true", function(data, status){
+        location.reload();
+      });
+}
+
+</script>
+
 {% endblock body %}
 
