@@ -1,4 +1,3 @@
-from math import prod
 from django.shortcuts import redirect, render
 from home.models import *
 from django.contrib.auth.models import User

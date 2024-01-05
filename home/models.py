@@ -1,6 +1,4 @@
-from asyncio.windows_events import NULL
 import datetime
-from urllib import request
 from django.db import models
 from django.contrib.auth.models import User
 
