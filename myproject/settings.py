@@ -81,7 +81,7 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'online_book_store',
         'USER': 'postgres',
         'PASSWORD': 'Postgres@3535',
